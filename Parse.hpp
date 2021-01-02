@@ -1,6 +1,7 @@
 /*This parses a split string into a number*/
 #include <string>
 #include <vector>
+#include <iostream>
 using namespace std;
 // Distinguish
 bool isWhitespace(char ch) {

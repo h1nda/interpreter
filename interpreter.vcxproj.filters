@@ -29,5 +29,8 @@
     <ClInclude Include="Parse.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="Node.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

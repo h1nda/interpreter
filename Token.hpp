@@ -3,10 +3,13 @@
 that will store data (*,/,+ or integers) and their type
 Type: NUMBER, VARIABLE, FUNCTION DEFINITION, FUNCTION, =, OPERATOR, and other*/
 
+/*TO-DO:
+Add Token Type ASSOCIATIVITY bc direct assignment operator '=' is right associative*/
 #include "Parse.hpp"
 
 class Token {
 	enum class TokenTypes {
+		Null,
 		Number,
 		Variable,
 		BinaryOperator,
@@ -16,16 +19,14 @@ class Token {
 		FunctionDef,
 		Parameter
 	};
-	TokenTypes type;
-	int value;
+	TokenTypes type = TokenTypes::Null;
+	int value = -1;
 	char op = ' ';
-	bool precedence = 0; // We are dealing with two types of precedence - HIGH = 1 (*,/,%) or LOW = 0 (+,-);
+	bool precedence = 1; // We are dealing with two types of precedence - HIGH = 1 (*,/,%) or LOW = 0 (+,-);
 	//size_t varCount = 0;
 public:
-	Token(){}
 	//Makes one token out of already split string parts
 	Token(string s) {
-		Token tkn;
 		if (isParseableInt(s, value)) {
 			type = TokenTypes::Number;
 		}
@@ -59,13 +60,21 @@ public:
 			}
 		}
 	}
+	void print() const {
+		if (type == TokenTypes::Number)
+			cout << value;
+		else
+			cout << op;
+	}
+	
 };
-
 //Splits the string into vector then tokenise each one and push into token vector
-vector<Token> tokenizeAll(vector<string> split) {
+vector<Token> tokenizeAll(const string& s) {
+	vector<string> split = splitString(s);
 	vector<Token> tokens;
 	for (int i = 0; i < split.size(); i++) {
 		tokens.push_back(Token(split[i]));
 	}
 	return tokens;
 }
+

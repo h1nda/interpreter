@@ -143,6 +143,7 @@
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Node.hpp" />
     <ClInclude Include="Parse.hpp" />
     <ClInclude Include="Token.hpp" />
   </ItemGroup>
