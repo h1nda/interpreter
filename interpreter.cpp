@@ -40,6 +40,7 @@ using namespace std;
 //    }
 //};
 
+
 bool Precedence(char op) {
 	if (op == '*' || op == '/')
 		return 1;
@@ -125,10 +126,21 @@ void ShuntingAlgorithm_Test(string expr) {
 	cout << infix;
 }
 
+bool parse_int(std::string s, int& result) {
+	if (!isDigit(s[0]))
+		return false;
+	result = 0;
+	for (int i = 0; i < s.length(); i++) {
+		result = result * 10 + s[i] - '0';
+	}
+	return true;
+}
 int main()
 {
-	string test = "90/5-10*11";
-	ShuntingAlgorithm_Test(test);
+	int test = 500;
+	string test1 = "33";
+	cout << parse_int(test1, test) << " ";
+	cout << test;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
