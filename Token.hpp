@@ -2,9 +2,9 @@
 /*To help with breaking up an equation, we create a Token class 
 that will store data (*,/,+ or integers) and their type
 Type: NUMBER, VARIABLE, FUNCTION DEFINITION, FUNCTION, =, OPERATOR, and other*/
-#include <string>
+
 #include "Parse.hpp"
-using namespace std;
+
 class Token {
 	enum class TokenTypes {
 		Number,
@@ -21,36 +21,51 @@ class Token {
 	char op = ' ';
 	bool precedence = 0; // We are dealing with two types of precedence - HIGH = 1 (*,/,%) or LOW = 0 (+,-);
 	//size_t varCount = 0;
+public:
 	Token(){}
-	//Tokenizes the seperate parts of a string:
-	Token tokenize(string s) {
+	//Makes one token out of already split string parts
+	Token(string s) {
 		Token tkn;
 		if (isParseableInt(s, value)) {
-			tkn.type = TokenTypes::Number;
+			type = TokenTypes::Number;
 		}
 		else if (s == "(")
-			tkn.type = TokenTypes::LeftBracket;
+			type = TokenTypes::LeftBracket;
 		else if (s == ")")
-			tkn.type = TokenTypes::RightBracket;
+			type = TokenTypes::RightBracket;
 		else {
-			tkn.type = TokenTypes::BinaryOperator;
+			type = TokenTypes::BinaryOperator;
 			switch (s[0]) {
 			case '*':
-				tkn.op = '*';
-				tkn.precedence = 1;
-			case '/': 
-				tkn.op = '/';
-				tkn.precedence = 1;
+				op = '*';
+				precedence = 1;
+				break;
+			case '/':
+				op = '/';
+				precedence = 1;
+				break;
 			case '%':
-				tkn.op = '%';
-				tkn.precedence = 1;
-			case '+': 
-				tkn.op = '+';
-				tkn.precedence = 0;
-			case '-': 
-				tkn.op = '-';
-				tkn.precedence = 0;
+				op = '%';
+				precedence = 1;
+				break;
+			case '+':
+				op = '+';
+				precedence = 0;
+				break;
+			case '-':
+				op = '-';
+				precedence = 0;
+				break;
 			}
 		}
 	}
 };
+
+//Splits the string into vector then tokenise each one and push into token vector
+vector<Token> tokenizeAll(vector<string> split) {
+	vector<Token> tokens;
+	for (int i = 0; i < split.size(); i++) {
+		tokens.push_back(Token(split[i]));
+	}
+	return tokens;
+}
