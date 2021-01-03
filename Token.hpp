@@ -6,9 +6,7 @@ Type: NUMBER, VARIABLE, FUNCTION DEFINITION, FUNCTION, =, OPERATOR, and other*/
 /*TO-DO:
 Add Token Type ASSOCIATIVITY bc direct assignment operator '=' is right associative*/
 #include "Parse.hpp"
-
-class Token {
-	enum class TokenTypes {
+enum class TokenTypes {
 		Null,
 		Number,
 		Variable,
@@ -19,12 +17,15 @@ class Token {
 		FunctionDef,
 		Parameter
 	};
+class Token { 
+public:
 	TokenTypes type = TokenTypes::Null;
 	int value = -1;
 	char op = ' ';
 	bool precedence = 1; // We are dealing with two types of precedence - HIGH = 1 (*,/,%) or LOW = 0 (+,-);
 	//size_t varCount = 0;
 public:
+	
 	//Makes one token out of already split string parts
 	Token(string s) {
 		if (isParseableInt(s, value)) {
