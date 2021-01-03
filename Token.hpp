@@ -10,7 +10,11 @@ enum class TokenTypes {
 		Null,
 		Number,
 		Variable,
-		BinaryOperator,
+		MULT,
+		ADD,
+		SUB,
+		MOD,
+		DIV,
 		LeftBracket,
 		RightBracket,
 		FunctionCall,
@@ -25,7 +29,7 @@ public:
 	bool precedence = 1; // We are dealing with two types of precedence - HIGH = 1 (*,/,%) or LOW = 0 (+,-);
 	//size_t varCount = 0;
 public:
-	
+	Token() {};
 	//Makes one token out of already split string parts
 	Token(string s) {
 		if (isParseableInt(s, value)) {
@@ -36,26 +40,30 @@ public:
 		else if (s == ")")
 			type = TokenTypes::RightBracket;
 		else {
-			type = TokenTypes::BinaryOperator;
 			switch (s[0]) {
 			case '*':
 				op = '*';
+				type = TokenTypes::MULT;
 				precedence = 1;
 				break;
 			case '/':
 				op = '/';
+				type = TokenTypes::DIV;
 				precedence = 1;
 				break;
 			case '%':
 				op = '%';
+				type = TokenTypes::MOD;
 				precedence = 1;
 				break;
 			case '+':
 				op = '+';
+				type = TokenTypes::ADD;
 				precedence = 0;
 				break;
 			case '-':
 				op = '-';
+				type = TokenTypes::SUB;
 				precedence = 0;
 				break;
 			}
