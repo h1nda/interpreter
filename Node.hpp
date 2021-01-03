@@ -12,11 +12,15 @@ public:
 };
 
 class BinOP : public Node {
-	BinOP(Node* left, string op, Node* right) {
+public:
+	BinOP(Node* left, Token token, Node* right) {
 		this->left = left;
-		Token temp(op);
-		data = temp;
+		data = token;
 		this->right = right;
+	}
+	~BinOP() {
+		delete left;
+		delete right;
 	}
 };
 class Number : public Node {
@@ -25,33 +29,82 @@ public:
 		data.value = value;
 		data.type = TokenTypes::Number;
 	}
+	~Number() {};
 };
 
 class Parser {
 	vector<Token> tokens;
 	Token currentToken;
 	int index;
-
+public:
 	Parser(string text) {
 		tokens = tokenizeAll(text);
-		currentToken = tokens.front();
 		index = 0;
+		currentToken = tokens[index];
+		//index = 0;
 	}
-
+	Node* Parse() {
+		return Expression();
+	}
+	void test() {
+		nextToken();
+	}
 	void nextToken() {
 		currentToken = tokens[index++];
+	}
+	bool isClosingBracket() {
+		return currentToken.type == TokenTypes::RightBracket;
+	}
+
+	Node* Expression() {
+		Node* left = Expression();
+		Node* right;
+		Token op = currentToken;
+		switch (currentToken.type) {
+		case TokenTypes::ADD:
+			nextToken();
+			right = Term();
+			return new BinOP(left, op, right);
+		case TokenTypes::SUB:
+			nextToken();
+			right = Term();
+			return new BinOP(left, op, right);
+			
+		}
+	}
+
+	Node* Term() {
+		Node* left = Factor();
+		Node* right;
+		Token op;
+		switch (currentToken.type) {
+		case TokenTypes::MULT:
+			op = currentToken;
+			nextToken();
+			right = Term();
+			return new BinOP(left, op, right);
+		case TokenTypes::DIV:
+			op = currentToken;
+			nextToken();
+			right = Term();
+			return new BinOP(left, op, right);
+		}
 	}
 
 	Node* Factor() {
 		Node* node;
+		int value;
 		switch (currentToken.type) {
 		case TokenTypes::Number:
-			int value = currentToken.value;
+			value = currentToken.value;
 			nextToken();
-			Number* num = new Number(value);
-			return num;
+			return new Number(value);
 		case TokenTypes::LeftBracket:
-
+			nextToken();
+			node = Expression();
+			if (isClosingBracket())
+				nextToken();
+			return node;
 		}
 	}
 
