@@ -12,6 +12,7 @@ enum class TokenTypes {
 		Variable,
 		MULT,
 		BinOp,
+		Assignment,
 		LeftBracket,
 		RightBracket,
 		FunctionCall,
@@ -36,6 +37,10 @@ public:
 			type = TokenTypes::LeftBracket;
 		else if (s == ")")
 			type = TokenTypes::RightBracket;
+		else if (isVariable(s[0])) {
+			type = TokenTypes::Variable;
+			op = s[0];
+		}
 		else {
 			switch (s[0]) {
 			case '*':
@@ -66,6 +71,10 @@ public:
 			}
 		}
 	}
+	Token(char letter) {
+
+
+	}
 
 	void print() const {
 		if (type == TokenTypes::Number)
@@ -76,6 +85,8 @@ public:
 
 	
 };
+
+// VARIABLES will be a special type of token that have a char and a value. 
 //Splits the string into vector then tokenise each one and push into token vector
 vector<Token> tokenizeAll(const string& s) {
 	vector<string> split = splitString(s);

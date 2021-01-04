@@ -1,6 +1,7 @@
 #include "Node.hpp"
 int main() {
-	string toParse = "10 * 4 - 2 / 10";
-	Node* root = ShuntingYard(toParse);
-	cout << Evaluate(root);
+	string toParse = "5 + 4";
+	Parser test(toParse);
+	cout << endl;
+	cout << test.Evaluate(test.Expression());
 }
