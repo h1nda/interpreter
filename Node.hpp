@@ -20,9 +20,13 @@ public:
 	Parser(string lines) {
 		tokens = tokenizeAll(lines);
 		currentToken = tokens[0];
-	}
+			}
 	void nextToken() {
-		currentToken = tokens[i++];
+		i++;
+		if (i >= tokens.size())
+			return;
+		//i++;
+		currentToken = tokens[i];
 	}
 	Node* Expression() {
 		//Using Shunting Yard Algorithm
@@ -83,16 +87,26 @@ public:
 
 	}
 
-	Node makeLeaf() {
+	Node makeLeaf() { //when it's a variable or a number
 		return Node(currentToken);
 	}
-	/*Node* Assign() {
-		Node* left = new Node(tokens[0]);
-		Node* root = new Node(tokens[1]);
-		Node* right = Expression(tokens + 1);
-	}*/
+	Node* Assign() { // a = 5+3 /2 -> a = 4;
+		/*
+		a = 1
+		b = 3
+		a = b + 2*/
+		Node* left = new Node(currentToken);
+		nextToken();
+		Token key = currentToken;
+		nextToken();
+		Node* right = Expression();
+		return new Node(key, left, right);
+	}
 	int Evaluate(Node* root) {
 		switch (root->data.type) {
+		case TokenTypes::Assignment:
+
+
 		case TokenTypes::Number:
 			return root->data.value;
 		case TokenTypes::BinOp:

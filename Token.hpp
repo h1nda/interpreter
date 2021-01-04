@@ -43,6 +43,10 @@ public:
 		}
 		else {
 			switch (s[0]) {
+			case '=':
+				op = '=';
+				type = TokenTypes::Assignment;
+				break;
 			case '*':
 				op = '*';
 				type = TokenTypes::BinOp;
