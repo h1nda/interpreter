@@ -1,7 +1,6 @@
 #include "Node.hpp"
 int main() {
-	string toParse = "403 % 3 / (11 + 46)";
-	Parser test(toParse);
-	test.Parse();
-
+	string toParse = "8*(6-11)";
+	Node* root = ShuntingYard(toParse);
+	print2D(root);
 }

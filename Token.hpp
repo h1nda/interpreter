@@ -11,6 +11,7 @@ enum class TokenTypes {
 		Number,
 		Variable,
 		MULT,
+		BinOp,
 		ADD,
 		SUB,
 		MOD,
@@ -43,27 +44,27 @@ public:
 			switch (s[0]) {
 			case '*':
 				op = '*';
-				type = TokenTypes::MULT;
+				type = TokenTypes::BinOp;
 				precedence = 1;
 				break;
 			case '/':
 				op = '/';
-				type = TokenTypes::DIV;
+				type = TokenTypes::BinOp;
 				precedence = 1;
 				break;
 			case '%':
 				op = '%';
-				type = TokenTypes::MOD;
+				type = TokenTypes::BinOp;
 				precedence = 1;
 				break;
 			case '+':
 				op = '+';
-				type = TokenTypes::ADD;
+				type = TokenTypes::BinOp;
 				precedence = 0;
 				break;
 			case '-':
 				op = '-';
-				type = TokenTypes::SUB;
+				type = TokenTypes::BinOp;
 				precedence = 0;
 				break;
 			}
@@ -74,6 +75,14 @@ public:
 			cout << value;
 		else
 			cout << op;
+	}
+	friend ostream& operator<<(ostream& out, const Token& io) {
+		if (io.type == TokenTypes::Number) {
+			out << io.value;
+		}
+		else
+			out << io.op;
+		return out;
 	}
 	
 };
