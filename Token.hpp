@@ -12,10 +12,6 @@ enum class TokenTypes {
 		Variable,
 		MULT,
 		BinOp,
-		ADD,
-		SUB,
-		MOD,
-		DIV,
 		LeftBracket,
 		RightBracket,
 		FunctionCall,
@@ -70,20 +66,14 @@ public:
 			}
 		}
 	}
+
 	void print() const {
 		if (type == TokenTypes::Number)
 			cout << value;
 		else
 			cout << op;
 	}
-	friend ostream& operator<<(ostream& out, const Token& io) {
-		if (io.type == TokenTypes::Number) {
-			out << io.value;
-		}
-		else
-			out << io.op;
-		return out;
-	}
+
 	
 };
 //Splits the string into vector then tokenise each one and push into token vector

@@ -30,11 +30,11 @@ Node* ShuntingYard(string eq) {
 			while (ops.top().type != TokenTypes::LeftBracket)
 			{
 
-				Node right = nodes.top();
+				Node* right = new Node(nodes.top());
 				nodes.pop();
-				Node left = nodes.top();
+				Node* left = new Node(nodes.top());
 				nodes.pop();
-				nodes.push(Node(ops.top(), &left, &right));
+				nodes.push(Node(ops.top(), left, right));
 				ops.pop();
 
 			}
@@ -45,11 +45,11 @@ Node* ShuntingYard(string eq) {
 				ops.push(tokens[i]);
 			}
 			else {
-				Node right = nodes.top();
+				Node *right = new Node(nodes.top());
 				nodes.pop();
-				Node left = nodes.top();
+				Node *left = new Node(nodes.top());
 				nodes.pop();
-				nodes.push(Node(ops.top(), &left, &right));
+				nodes.push(Node(ops.top(), left, right));
 				ops.pop();
 				ops.push(tokens[i]);
 			}
@@ -57,20 +57,38 @@ Node* ShuntingYard(string eq) {
 		}
 	}
 	while (!ops.empty()) {
-		Node right = nodes.top();
+		Node* right = new Node(nodes.top());
 		nodes.pop();
-		Node left = nodes.top();
+		Node* left = new Node(nodes.top());
 		nodes.pop();
-		nodes.push(Node(ops.top(), &left, &right));
+		nodes.push(Node(ops.top(), left, right));
 		ops.pop();
 	}
 
-	return &nodes.top();
+	Node* root = new Node(nodes.top());
+	return root;
 
 }
 
 int Evaluate(Node* root) {
+	switch (root->data.type) {
+	case TokenTypes::Number:
+		return root->data.value;
+	case TokenTypes::BinOp:
+		switch (root->data.op) {
+		case '*':
+			return Evaluate(root->left) * Evaluate(root->right);
+		case '/':
+			return Evaluate(root->left) / Evaluate(root->right);
+		case '%':
+			return Evaluate(root->left) % Evaluate(root->right);
+		case '+':
+			return Evaluate(root->left) + Evaluate(root->right);
+		case '-':
+			return Evaluate(root->left) -  Evaluate(root->right);
 
+		}
+	}
 }
 
 

@@ -1,6 +1,6 @@
 #include "Node.hpp"
 int main() {
-	string toParse = "8*(6-11)";
+	string toParse = "10 * 4 - 2 / 10";
 	Node* root = ShuntingYard(toParse);
-	print2D(root);
+	cout << Evaluate(root);
 }
