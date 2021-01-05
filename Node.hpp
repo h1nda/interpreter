@@ -21,87 +21,115 @@ public:
 		tokens = tokenizeAll(lines);
 		currentToken = tokens[0];
 			}
-	void nextToken() {
+	bool nextToken() {
 		i++;
 		if (i >= tokens.size())
-			return;
+			return 0;
 		//i++;
 		currentToken = tokens[i];
+		return 1;
 	}
-	Node* Expression() {
-		//Using Shunting Yard Algorithm
-		//vector<Token> tokens = tokenizeAll(eq);
-		stack<Node> nodes;
-		stack<Token> ops;
+	//Node* Expression() {
+	//	//Using Shunting Yard Algorithm
+	//	//vector<Token> tokens = tokenizeAll(eq);
+	//	stack<Node> nodes;
+	//	stack<Token> ops;
 
-		while (i < tokens.size()) {
-			if (currentToken.type == TokenTypes::Number || currentToken.type == TokenTypes::Variable) {
-				nodes.push(makeLeaf());
-			}
-			else if (currentToken.type == TokenTypes::LeftBracket) {
-				ops.push(currentToken);
-			}
-			else if (currentToken.type == TokenTypes::RightBracket) {
+	//	while (i < tokens.size()) {
+	//		if (currentToken.type == TokenTypes::Number || currentToken.type == TokenTypes::Variable) {
+	//			nodes.push(makeLeaf());
+	//		}
+	//		else if (currentToken.type == TokenTypes::LeftBracket) {
+	//			ops.push(currentToken);
+	//		}
+	//		else if (currentToken.type == TokenTypes::RightBracket) {
 
-				while (ops.top().type != TokenTypes::LeftBracket)
-				{
+	//			while (ops.top().type != TokenTypes::LeftBracket)
+	//			{
 
-					Node* right = new Node(nodes.top());
-					nodes.pop();
-					Node* left = new Node(nodes.top());
-					nodes.pop();
-					nodes.push(Node(ops.top(), left, right));
-					ops.pop();
+	//				Node* right = new Node(nodes.top());
+	//				nodes.pop();
+	//				Node* left = new Node(nodes.top());
+	//				nodes.pop();
+	//				nodes.push(Node(ops.top(), left, right));
+	//				ops.pop();
 
-				}
-				ops.pop();
-			}
-			else if (currentToken.type == TokenTypes::BinOp) {
-				if (ops.empty() || ops.top().type == TokenTypes::LeftBracket || ops.top().precedence < currentToken.precedence) {
-					ops.push(currentToken);
-				}
-				else {
-					Node* right = new Node(nodes.top());
-					nodes.pop();
-					Node* left = new Node(nodes.top());
-					nodes.pop();
-					nodes.push(Node(ops.top(), left, right));
-					ops.pop();
-					ops.push(currentToken);
-				}
+	//			}
+	//			ops.pop();
+	//		}
+	//		else if (currentToken.type == TokenTypes::BinOp) {
+	//			if (ops.empty() || ops.top().type == TokenTypes::LeftBracket || ops.top().precedence < currentToken.precedence) {
+	//				ops.push(currentToken);
+	//			}
+	//			else {
+	//				Node* right = new Node(nodes.top());
+	//				nodes.pop();
+	//				Node* left = new Node(nodes.top());
+	//				nodes.pop();
+	//				nodes.push(Node(ops.top(), left, right));
+	//				ops.pop();
+	//				ops.push(currentToken);
+	//			}
 
-			}
+	//		}
+	//		nextToken();
+	//	}
+	//	while (!ops.empty()) {
+	//		Node* right = new Node(nodes.top());
+	//		nodes.pop();
+	//		Node* left = new Node(nodes.top());
+	//		nodes.pop();
+	//		nodes.push(Node(ops.top(), left, right));
+	//		ops.pop();
+	//	}
+
+	//	Node* root = new Node(nodes.top());
+	//	return root;
+
+	//}
+	/*New: Evaluate lines using Operator Precedence Parser to build an AST:
+	* 
+	*/
+	Token peek() {
+		size_t temp = i + 1;
+		if (temp >= tokens.size())
+			return Token();
+		return tokens[temp];
+	}
+	Node* parseExpression() {
+		return parseExpressionHelper(makeLeaf(), 0);
+	}
+	Node* parseExpressionHelper(Node* left, bool precedence) {
+		Token lookahead = peek();
+		while (lookahead.type == TokenTypes::BinOp && lookahead.precedence >= precedence) {
+			Token binOp = lookahead;
 			nextToken();
+			nextToken();
+			Node* right = makeLeaf();
+			lookahead = peek();
+			while (lookahead.type == TokenTypes::BinOp && lookahead.precedence >= binOp.precedence) {
+				right = parseExpressionHelper(right, lookahead.precedence);
+				lookahead = peek();
+			}
+		left = new Node(binOp, left, right);
 		}
-		while (!ops.empty()) {
-			Node* right = new Node(nodes.top());
-			nodes.pop();
-			Node* left = new Node(nodes.top());
-			nodes.pop();
-			nodes.push(Node(ops.top(), left, right));
-			ops.pop();
-		}
-
-		Node* root = new Node(nodes.top());
-		return root;
-
+		return left;
 	}
-
-	Node makeLeaf() { //when it's a variable or a number
-		return Node(currentToken);
+	Node* makeLeaf() { //when it's a variable or a number
+		return new Node(currentToken);
 	}
-	Node* Assign() { // a = 5+3 /2 -> a = 4;
-		/*
-		a = 1
-		b = 3
-		a = b + 2*/
-		Node* left = new Node(currentToken);
-		nextToken();
-		Token key = currentToken;
-		nextToken();
-		Node* right = Expression();
-		return new Node(key, left, right);
-	}
+	//Node* Assign() { // a = 5+3 /2 -> a = 4;
+	//	/*
+	//	a = 1
+	//	b = 3
+	//	a = b + 2*/
+	//	Node* left = new Node(currentToken);
+	//	nextToken();
+	//	Token key = currentToken;
+	//	nextToken();
+	//	Node* right = Expression();
+	//	return new Node(key, left, right);
+	//}
 	int Evaluate(Node* root) {
 		switch (root->data.type) {
 		case TokenTypes::Assignment:
