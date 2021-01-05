@@ -44,7 +44,7 @@
 //
 //	void lookUp(Token key, Node* value) {
 //		int index = key.id % capacity;
-//		for()
+//		for(SinglyLinkedList<Pair>::Iterator it = entries->begin(); )
 //	}
 //	void insert
 //	void get

@@ -25,8 +25,12 @@ class SinglyLinkedList {
 	}
 public:
 	class Iterator {
+	
 		LinkNode* current;
 	public:
+		Iterator(LinkNode* node) {
+			current = node;
+		}
 		Iterator& operator=(const Iterator& other) {
 			current = other.current;
 		}
@@ -74,12 +78,13 @@ public:
 		{
 			T data = tail->data;
 			//it = begin();
-			Iterator it_prev = begin();
-			Iterator it = it_prev.peek();
-			while (it != end()) {
-				it++;
-				it_prev++;
+			LinkNode* it_prev = head;
+			LinkNode* it = head->next;
+			while (it != tail) {
+				it = it->next;
+				it_prev = it_prev->next;
 			}
+			
 			delete tail;
 			tail = it_prev;
 			it_prev->next = nullptr;
@@ -92,12 +97,13 @@ public:
 		return head;
 	}
 	Iterator end() const {
-		return tail;
+		return tail->next;
 	}
 	SinglyLinkedList() {
 		head = tail = nullptr;
 	}
 	~SinglyLinkedList() {
+		std::cout << "calling destructor";
 		free();
 	}
 	SinglyLinkedList(const SinglyLinkedList<T>& other) {
