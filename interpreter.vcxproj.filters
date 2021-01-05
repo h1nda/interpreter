@@ -18,10 +18,10 @@
     <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SymbolTable.cpp">
+    <ClCompile Include="SinglyLinkedList.hpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SinglyLinkedList.hpp">
+    <ClCompile Include="SymbolTable.hpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

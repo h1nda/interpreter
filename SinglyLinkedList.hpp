@@ -16,10 +16,10 @@ class SinglyLinkedList {
 			delete temp;
 		}
 	}
-	void copyFrom(const SinglyLinkedList<T>& other) {
-		LinkNode* it = head;
+	void copyFrom(const SinglyLinkedList& other) {
+		LinkNode* it = other.head;
 		while (it) {
-			other.pushBack(it->data);
+			pushBack(it->data);
 			it = it->next;
 		}
 	}
@@ -28,11 +28,24 @@ public:
 	
 		LinkNode* current;
 	public:
+		Iterator() {
+			current = nullptr;
+		}
 		Iterator(LinkNode* node) {
 			current = node;
 		}
-		Iterator& operator=(const Iterator& other) {
+		Iterator(const Iterator& other) {
 			current = other.current;
+		}
+		~Iterator() {
+			delete current;
+		}
+		Iterator& operator=(const Iterator& other) {
+			if (this != &other) {
+				delete current;
+				current = other;
+			}
+			return *this;
 		}
 		Iterator peek() const {
 			return current->next;
@@ -106,10 +119,10 @@ public:
 		std::cout << "calling destructor";
 		free();
 	}
-	SinglyLinkedList(const SinglyLinkedList<T>& other) {
+	SinglyLinkedList(const SinglyLinkedList& other) {
 		copyFrom(other);
 	}
-	SinglyLinkedList<T>& operator=(const SinglyLinkedList<T>& other) {
+	SinglyLinkedList<T>& operator=(const SinglyLinkedList& other) {
 		if (this != &other)
 		{
 			free();
@@ -117,7 +130,7 @@ public:
 		}
 		return *this;
 	}
-	friend std::ostream& operator<<(std::ostream& out, const SinglyLinkedList<T>& sll) {
+	friend std::ostream& operator<<(std::ostream& out, const SinglyLinkedList& sll) {
 		LinkNode* it = sll.head;
 		for (Iterator it = sll.begin(); it != sll.end(); it++)
 			out << *it << " ";
