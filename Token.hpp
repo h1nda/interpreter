@@ -22,8 +22,10 @@ enum class TokenTypes {
 class Token { 
 public:
 	TokenTypes type = TokenTypes::Null;
-	int value = -1;
-	char op = ' ';
+	int value = -1; // for numbers
+	char op = ' '; // for operators
+	string name; // for variable and function names
+	int id = -1;// for var/func lookup table 
 	bool precedence = 1; // We are dealing with two types of precedence - HIGH = 1 (*,/,%) or LOW = 0 (+,-);
 	//size_t varCount = 0;
 public:
@@ -37,9 +39,10 @@ public:
 			type = TokenTypes::LeftBracket;
 		else if (s == ")")
 			type = TokenTypes::RightBracket;
-		else if (isVariable(s[0])) {
+		else if (isVariable(s)) {
 			type = TokenTypes::Variable;
-			op = s[0];
+			name = s;
+			id = hashFunction(s);
 		}
 		else {
 			switch (s[0]) {

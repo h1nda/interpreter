@@ -5,6 +5,15 @@
 #include <stack>
 using namespace std;
 // Distinguish
+const int VAR_TERMINALS = 31;
+size_t hashFunction(string s) { //Polynomial rolling hash
+	int id = 0;
+	int n = s.length();
+	for (int i = 0; i < n; i++) {
+		id += s[i] * pow(VAR_TERMINALS, i);
+	}
+	return id;
+}
 bool isWhitespace(char ch) {
 	return (ch == ' ' || ch == '/t');
 }
@@ -14,8 +23,12 @@ bool isDigit(char ch) {
 bool isFunction(char ch) {
 	return (ch >= 'A' && ch <= 'Z');
 }
-bool isVariable(char ch) {
-	return (ch >= 'a' && ch <= 'z');
+bool isVariable(std::string s) {
+	for (int i = 0; i < s.size(); i++) {
+		if (s[i] < 'a' || s[i] > 'z')
+			return false;
+	}
+	return true;
 }
 bool isParseableInt(std::string s, int& result) { /*Returns true or false and saves the parsed number into result*/
 	if (!isDigit(s[0]))
