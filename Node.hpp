@@ -1,6 +1,15 @@
 #include "Token.hpp"
 #include <iostream>
-
+const int VAR_TERMINALS = 31;
+/*To store the variables, we will build a dynamic array of expressions, where each index will correspond to a variable name (string). We use mapFunction() to encode a string into an index. This way, whenever we are calling an already declared variable, we can find/modify it in O(1). */
+size_t mapFunction(string s, size_t capacity) {
+	int code = 0;
+	int n = s.length();
+	for (int i = 0; i < n; i++) {
+		code += s[i] * pow(VAR_TERMINALS,i);
+	}
+	return code % capacity;
+}
 struct Node {
 
 	Token data;
@@ -55,8 +64,8 @@ public:
 		}
 		return left;
 	}
-
-	Node* makeLeaf() { //We represent a terminal from the rule FACTOR -> VAR | Num | (Expr) as a leaf in the AST:
+	//We represent a terminal from the rule FACTOR -> VAR | Num | (Expr) as a leaf in the AST:
+	Node* makeLeaf() {
 		switch (currentToken.type) {
 		case TokenTypes::Number:
 		case TokenTypes::Variable:
