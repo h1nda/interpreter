@@ -1,5 +1,6 @@
+#pragma once
 #include "Token.hpp"
-#include <iostream>
+//#include <iostream>
 
 
 struct Node {
