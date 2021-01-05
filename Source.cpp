@@ -1,8 +1,10 @@
 #include "Node.hpp"
 int main() {
-	string assign = "2 + 3 * 4";
+	string assign = " a = (43 + 3) / 2";
 	Parser test1(assign);
-	Node* root =test1.parseExpression();
-	cout << test1.Evaluate(root);
+	Node* a = test1.Assign();
+	cout << "Value of variable " << a->left->data.op << " is " << 
+		test1.Evaluate(a->right);
+	
 	//cout << test.Evaluate(test.Expression());
 }
