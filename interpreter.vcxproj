@@ -139,7 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="SinglyLinkedList.cpp" />
+    <ClCompile Include="SinglyLinkedList.hpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="SymbolTable.cpp" />
   </ItemGroup>

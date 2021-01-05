@@ -1,4 +1,4 @@
-
+#pragma once
 /*To help with breaking up an equation, we create a Token class 
 that will store data (*,/,+ or integers) and their type
 Type: NUMBER, VARIABLE, FUNCTION DEFINITION, FUNCTION, =, OPERATOR, and other*/

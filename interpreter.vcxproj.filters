@@ -21,7 +21,7 @@
     <ClCompile Include="SymbolTable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SinglyLinkedList.cpp">
+    <ClCompile Include="SinglyLinkedList.hpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
