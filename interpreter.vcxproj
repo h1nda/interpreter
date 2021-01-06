@@ -141,7 +141,7 @@
   <ItemGroup>
     <ClCompile Include="SinglyLinkedList.hpp" />
     <ClCompile Include="Source.cpp" />
-    <ClCompile Include="SymbolTable.cpp" />
+    <ClCompile Include="SymbolTable.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Node.hpp" />
