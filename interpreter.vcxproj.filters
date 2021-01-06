@@ -15,27 +15,27 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SymbolTable.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SinglyLinkedList.hpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SymbolTable.hpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Parse.cpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AST.cpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="Test.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Token.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Lexer.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AST.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

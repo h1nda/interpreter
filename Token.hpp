@@ -2,7 +2,7 @@
 /*To help with breaking up an equation, we create a Token class 
 that will store data (*,/,+ or integers) and their type
 Type: NUMBER, VARIABLE, FUNCTION DEFINITION, FUNCTION, =, OPERATOR, and other*/
-#include <iostream>
+#include <string>
 const int VAR_TERMINALS = 31;
 enum class TokenTypes {
 		Null,
@@ -29,13 +29,16 @@ public:
 	//char op = ' '; // for operators
 	std::string name; // for variable and function names
 	unsigned long int hash = -1;// for var/func lookup table 
-	//bool precedence = 1; // We are dealing with two types of precedence - HIGH = 1 (*,/,%) or LOW = 0 (+ ,-);
+	bool precedence = 1; // We are dealing with two types of precedence - HIGH = 1 (*,/,%) or LOW = 0 (+ ,-);
 	int line; // save for if error occurs
 	//size_t varCount = 0;
 public:
 	Token() {};
 	Token(TokenTypes type, int line) {
+		if (type == TokenTypes::ADD || type == TokenTypes::SUB)
+			precedence = false;
 		this->type = type;
+		this->line = line;
 	}
 	Token(TokenTypes type, int value, int line) : type(type), value(value), line(line) {};
 	Token(TokenTypes type, std::string name, int line) {
@@ -102,24 +105,24 @@ public:
 			}
 		}
 	}*/
-	void print() const {
+	/*void print() const {
 		if (type == TokenTypes::Number)
 			std::cout << value;
 		else
 			std::cout << op;
-	}
+	}*/
 
 	
 };
 
 // VARIABLES will be a special type of token that have a char and a value. 
 //Splits the string into vector then tokenise each one and push into token vector
-std::vector<Token> tokenizeAll(const std::string& s) {
-	std::vector<std::string> split = splitString(s);
-	std::vector<Token> tokens;
-	for (int i = 0; i < split.size(); i++) {
-		tokens.push_back(Token(split[i]));
-	}
-	return tokens;
-}
+//std::vector<Token> tokenizeAll(const std::string& s) {
+//	std::vector<std::string> split = splitString(s);
+//	std::vector<Token> tokens;
+//	for (int i = 0; i < split.size(); i++) {
+//		tokens.push_back(Token(split[i]));
+//	}
+//	return tokens;
+//}
 
