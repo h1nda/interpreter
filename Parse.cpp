@@ -1,13 +1,12 @@
 /*This parses a split string into a number*/
 #include <string>
 #include <vector>
-#include <iostream>
-#include <stack>
-using namespace std;
+//#include <iostream>
+//using namespace std;
 // Distinguish
 const int VAR_TERMINALS = 31;
-size_t hashFunction(string s) { //Polynomial rolling hash
-	int id = 0;
+unsigned long int hashFunction(std::string s) { //Polynomial rolling hash
+	unsigned long int id = 0;
 	int n = s.length();
 	for (int i = 0; i < n; i++) {
 		id += s[i] * pow(VAR_TERMINALS, i);
@@ -39,11 +38,11 @@ bool isParseableInt(std::string s, int& result) { /*Returns true or false and sa
 	}
 	return true;
 }
-vector<string> splitString(const std::string& s) {
-	vector<string> split;
+std::vector<std::string> splitString(const std::string& s) {
+	std::vector<std::string> split;
 	//In case there's a number in the string:
 	for (int i = 0; i < s.length(); i++) {
-		string temp;
+		std::string temp;
 		//In case there are many whitespaces or tabs, skip through them:
 		while (isWhitespace(s[i])) {
 			i++;

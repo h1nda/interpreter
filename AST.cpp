@@ -1,26 +1,26 @@
-#include "Token.hpp"
-#include <iostream>
+#include "Tokenizer.cpp"
+//#include <iostream>
 
 
 struct Node {
-
 	Token data;
 	Node* left = nullptr;
 	Node* right = nullptr;
-
 	Node(Token data, Node* left = nullptr, Node* right = nullptr) : data(data), left(left), right(right) {};
+	
 };
 
 class Parser {
-	vector<Token> tokens;
+	std::vector<Token> tokens;
 	size_t i = 0;
 	Token currentToken;
 	//Node* root;
 public:
-	Parser(string lines) {
+	Parser(std::string lines) {
 		tokens = tokenizeAll(lines);
 		currentToken = tokens[0];
 	}
+
 	bool nextToken() {
 		i++;
 		if (i >= tokens.size())

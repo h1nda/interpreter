@@ -18,7 +18,7 @@ public:
 		Iterator();
 		Iterator(LinkNode* node);
 		Iterator(const Iterator& other);
-
+		
 		Iterator& operator=(const Iterator& other);
 		Iterator peek() const;
 		Iterator& operator++(int);
