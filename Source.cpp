@@ -1,5 +1,5 @@
 #include "SinglyLinkedList.hpp"
-
+#include "AST.cpp"
 //class SymbolTable {
 //	size_t capacity = 31;
 //	//size_t current;

@@ -1,67 +1,139 @@
 /*This parses a split string into a number*/
 #include <string>
-#include <vector>
+#include "SinglyLinkedList.hpp"
+#include "Token.hpp"
 //#include <iostream>
 //using namespace std;
 // Distinguish
 const int VAR_TERMINALS = 31;
-unsigned long int hashFunction(std::string s) { //Polynomial rolling hash
-	unsigned long int id = 0;
-	int n = s.length();
-	for (int i = 0; i < n; i++) {
-		id += s[i] * pow(VAR_TERMINALS, i);
-	}
-	return id;
-}
-bool isWhitespace(char ch) {
-	return (ch == ' ' || ch == '/t');
-}
-bool isDigit(char ch) {
-	return (ch >= '0' && ch <= '9');
-}
-bool isFunction(char ch) {
-	return (ch >= 'A' && ch <= 'Z');
-}
-bool isVariable(std::string s) {
-	for (int i = 0; i < s.size(); i++) {
-		if (s[i] < 'a' || s[i] > 'z')
-			return false;
-	}
-	return true;
-}
-bool isParseableInt(std::string s, int& result) { /*Returns true or false and saves the parsed number into result*/
-	if (!isDigit(s[0]))
-		return false;
-	result = 0;
-	for (int i = 0; i < s.length(); i++) {
-		result = result * 10 + (s[i] - '0');
-	}
-	return true;
-}
-std::vector<std::string> splitString(const std::string& s) {
-	std::vector<std::string> split;
-	//In case there's a number in the string:
-	for (int i = 0; i < s.length(); i++) {
-		std::string temp;
-		//In case there are many whitespaces or tabs, skip through them:
-		while (isWhitespace(s[i])) {
-			i++;
-		}
-		//In case there's a number in the string, 
-		if (isDigit(s[i])) {
-			while (isDigit(s[i])) {
-				temp += s[i];
-				i++;
-			}
-			i--; //while loop positions i at the next non-digit and it would be skipped in the next for loop?
-				// no need to check further
-		}
-		else {
-			temp.push_back(s[i]);
-		}
-		split.push_back(temp);
 
+class Lexer {
+	std::string buildNumberFromString() {
+		std::string temp;
+		while (isDigit()) {
+			temp += sourceCode[current++];
+		}
+		return temp;
 	}
-	return split;
-}
+	std::string sourceCode;
+	SinglyLinkedList<Token> tokens;
+	int current = 0;
+	int line = 1;
+	Lexer(std::string soucre) {
+		sourceCode = soucre;
+		this->tokens = tokeniseAll();
+	}
+	void buildToken(TokenTypes type) {
+		tokens.pushBack(Token(type, line));
+	} // FOR SYMBOLS
+	void buildToken(TokenTypes type, int value) {
+		tokens.pushBack(Token(type, value, line));
+	} //FOR NUMBERS
+	void buildToken(TokenTypes type, std::string name) {
+		tokens.pushBack(Token(type, name, line));
+	} //FOR VARIABLES/FUNCTIONS/KEYWORDS
+	void generateTokenList() {
+		switch (sourceCode[current]) {
+		case ' ':
+			current++;
+			break;
+		case '\n':
+			line++;
+			current++;
+			break;
+		case '(':
+			buildToken(TokenTypes::LeftBracket);
+			current++;
+			break;
+		case ')':
+			buildToken(TokenTypes::RightBracket);
+			current++;
+			break;
+		case '*':
+			buildToken(TokenTypes::MULT);
+			current++;
+			break;
+		case '/':
+			buildToken(TokenTypes::DIV);
+			current++;
+			break;
+		case '+':
+			buildToken(TokenTypes::ADD);
+			current++;
+			break;
+		case '-':
+			buildToken(TokenTypes::SUB);
+			current++;
+			break;
+		case '%':
+			buildToken(TokenTypes::MOD);
+			current++;
+			break;
+		case '=':
+			buildToken(TokenTypes::Assignment);
+			current++;
+			break;
+		default:
+			if (isDigit()) {
+				int value = parseStringToInt();
+				buildToken(TokenTypes::Number, value);
+			}
+			else if (isLowerCase()) {
+				std::string name = buildVariableName();
+				if (name == "print")
+					buildToken(TokenTypes::Print);
+				else if (name == "read")
+					buildToken(TokenTypes::Read);
+				else {
+					buildToken(TokenTypes::Variable, name);
+				}
+			}
+			else if (isUpperCase()) {
+				std::string name = buildFunctionName();
+				buildToken(TokenTypes::FunctionDef, name);
+			}
+			else
+				throw "error";
+
+		}
+	}
+	bool isWhitespace(char ch) {
+		return (ch == ' ' || ch == '/t');
+	}
+	bool isDigit() {
+		return (sourceCode[current] >= '0' && sourceCode[current] <= '9');
+	}
+	bool isFunction(char ch) {
+		return (sourceCode[current] >= 'A' && sourceCode[current] <= 'Z');
+	}
+	bool isLowerCase() {
+		return sourceCode[current] >= 'a' && sourceCode[current] <= 'z';
+	}
+	bool isUpperCase() {
+		return sourceCode[current] >= 'A' && sourceCode[current] <= 'Z';
+	}
+	std::string buildVariableName() {
+		std::string temp;
+		while (isLowerCase()) {
+			temp += sourceCode[current++];
+		}
+		return temp;
+	}
+	std::string buildFunctionName() {
+		std::string temp;
+		while (isUpperCase()) {
+			temp += sourceCode[current++];
+		}
+		return temp;
+	}
+	
+	int parseStringToInt() { 
+		std::string s = buildNumberFromString();/*Returns true or false and saves the parsed number into result*/
+		int result = 0;
+		for (int i = 0; i < s.length(); i++) {
+			result = result * 10 + (s[i] - '0');
+		}
+		return result;
+	}
+};
 

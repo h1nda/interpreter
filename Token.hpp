@@ -1,17 +1,20 @@
-#pragma once
+#pragma once //DELETE L8R
 /*To help with breaking up an equation, we create a Token class 
 that will store data (*,/,+ or integers) and their type
 Type: NUMBER, VARIABLE, FUNCTION DEFINITION, FUNCTION, =, OPERATOR, and other*/
 #include <iostream>
-/*TO-DO:
-Add Token Type ASSOCIATIVITY bc direct assignment operator '=' is right associative*/
-#include "Parse.cpp"
+const int VAR_TERMINALS = 31;
 enum class TokenTypes {
 		Null,
+		Print,
+		Read,
 		Number,
 		Variable,
 		MULT,
-		BinOp,
+		SUB, 
+		MOD,
+		DIV,
+		ADD,
 		Assignment,
 		LeftBracket,
 		RightBracket,
@@ -23,15 +26,36 @@ class Token {
 public:
 	TokenTypes type = TokenTypes::Null;
 	int value = -1; // for numbers
-	char op = ' '; // for operators
+	//char op = ' '; // for operators
 	std::string name; // for variable and function names
-	unsigned long int id = -1;// for var/func lookup table 
-	bool precedence = 1; // We are dealing with two types of precedence - HIGH = 1 (*,/,%) or LOW = 0 (+,-);
+	unsigned long int hash = -1;// for var/func lookup table 
+	//bool precedence = 1; // We are dealing with two types of precedence - HIGH = 1 (*,/,%) or LOW = 0 (+ ,-);
+	int line; // save for if error occurs
 	//size_t varCount = 0;
 public:
 	Token() {};
+	Token(TokenTypes type, int line) {
+		this->type = type;
+	}
+	Token(TokenTypes type, int value, int line) : type(type), value(value), line(line) {};
+	Token(TokenTypes type, std::string name, int line) {
+		this->name = name;
+		if (type == TokenTypes::FunctionDef || type == TokenTypes::Variable) {
+			this->hash = hashFunction();
+		}
+		this->type = type;
+		this->line = line;
+	}
+	unsigned long int hashFunction() { //Polynomial rolling hash
+		unsigned long int hash = 0;
+		int n = name.length();
+		for (int i = 0; i < n; i++) {
+			hash += name[i] * pow(VAR_TERMINALS, i);
+		}
+		return hash;
+	}
 	//Makes one token out of already split string parts
-	Token(std::string s) {
+	/*Token(std::string s) {
 		if (isParseableInt(s, value)) {
 			type = TokenTypes::Number;
 		}
@@ -77,7 +101,7 @@ public:
 				break;
 			}
 		}
-	}
+	}*/
 	void print() const {
 		if (type == TokenTypes::Number)
 			std::cout << value;

@@ -29,13 +29,13 @@
     <ClInclude Include="Parse.cpp">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Tokenizer.cpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="AST.cpp">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Test.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Token.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -147,7 +147,7 @@
     <ClInclude Include="AST.cpp" />
     <ClInclude Include="Parse.cpp" />
     <ClInclude Include="Test.hpp" />
-    <ClInclude Include="Tokenizer.cpp" />
+    <ClInclude Include="Token.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
