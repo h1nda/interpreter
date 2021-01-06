@@ -30,10 +30,14 @@ public:
 	std::string name; // for variable and function names
 	unsigned long int hash = -1;// for var/func lookup table 
 	bool precedence = 1; // We are dealing with two types of precedence - HIGH = 1 (*,/,%) or LOW = 0 (+ ,-);
-	int line; // save for if error occurs
+	int line = 0; // save for if error occurs
 	//size_t varCount = 0;
 public:
 	Token() {};
+	//TESTING FUNCTION
+	void printHash() {
+		std::cout << hash;
+	}
 	Token(TokenTypes type, int line) {
 		if (type == TokenTypes::ADD || type == TokenTypes::SUB)
 			precedence = false;

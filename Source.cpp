@@ -1,4 +1,5 @@
-#include "Lexer.hpp"
+
+#include "AST.hpp"
 //class SymbolTable {
 //	size_t capacity = 31;
 //	//size_t current;
@@ -105,7 +106,19 @@ int main() {
 	//init.Insert(testt, node);
 	//std::cout << test1.Evaluate(init.Get(testt));
 	//std::cout << "oop";
-	Lexer test("a = 40 - 2");
-	std::cout << "eof";
+	Lexer test("6 / 2 + 6 % 4");
+	
+
+	//TEST
+	/*SinglyLinkedList<int> a;
+	a.pushBack(4);
+	a.pushBack(1);
+	a.pushBack(3);
+	a.pushBack(5);
+	a.pushBack(35);
+	auto it = a.begin();
+	std::cout << *it.peek();
+	std::cout << std::endl << *it;*/
+
 
 }

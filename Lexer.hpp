@@ -2,6 +2,7 @@
 #include "SinglyLinkedList.hpp"
 #include "Token.hpp"
 class Lexer {
+public: //REMOVE L8R
 	std::string sourceCode;
 	SinglyLinkedList<Token> tokens;
 	int current = 0;

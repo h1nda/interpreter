@@ -1,4 +1,4 @@
-//#pragma once //DELETE L8R
+#pragma once //DELETE L8R
 #include <iostream>
 template <class T>
 class SinglyLinkedList {
@@ -79,7 +79,7 @@ typename SinglyLinkedList<T>::Iterator& SinglyLinkedList<T>::Iterator::operator=
 {
 	if (this != &other) {
 		delete current;
-		current = other;
+		current = other.current;
 	}
 	return *this;
 }

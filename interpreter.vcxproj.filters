@@ -26,9 +26,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Test.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="Token.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
