@@ -1,6 +1,4 @@
-//#include <iostream>
-#pragma once
-//#include "Node.hpp"
+#include <iostream>
 template <class T>
 class SinglyLinkedList {
 	struct LinkNode {
@@ -18,36 +16,23 @@ class SinglyLinkedList {
 			delete temp;
 		}
 	}
-	void copyFrom(const SinglyLinkedList& other) {
-		LinkNode* it = other.head;
+	void copyFrom(const SinglyLinkedList<T>& other) {
+		LinkNode* it = head;
 		while (it) {
-			pushBack(it->data);
+			other.pushBack(it->data);
 			it = it->next;
 		}
 	}
 public:
 	class Iterator {
-
+	
 		LinkNode* current;
 	public:
-		Iterator() {
-			current = nullptr;
-		}
 		Iterator(LinkNode* node) {
 			current = node;
 		}
-		Iterator(const Iterator& other) {
-			current = other.current;
-		}
-		~Iterator() {
-			delete current;
-		}
 		Iterator& operator=(const Iterator& other) {
-			if (this != &other) {
-				delete current;
-				current = other;
-			}
-			return *this;
+			current = other.current;
 		}
 		Iterator peek() const {
 			return current->next;
@@ -99,19 +84,19 @@ public:
 				it = it->next;
 				it_prev = it_prev->next;
 			}
-
+			
 			delete tail;
 			tail = it_prev;
 			it_prev->next = nullptr;
-
+			
 			return data;
 
 		}
 	}
-	Iterator begin() {
+	Iterator begin() const {
 		return head;
 	}
-	Iterator end() {
+	Iterator end() const {
 		return tail->next;
 	}
 	SinglyLinkedList() {
@@ -121,10 +106,10 @@ public:
 		std::cout << "calling destructor";
 		free();
 	}
-	SinglyLinkedList(const SinglyLinkedList& other) {
+	SinglyLinkedList(const SinglyLinkedList<T>& other) {
 		copyFrom(other);
 	}
-	SinglyLinkedList& operator=(const SinglyLinkedList& other) {
+	SinglyLinkedList<T>& operator=(const SinglyLinkedList<T>& other) {
 		if (this != &other)
 		{
 			free();
@@ -132,7 +117,7 @@ public:
 		}
 		return *this;
 	}
-	friend std::ostream& operator<<(std::ostream& out, const SinglyLinkedList& sll) {
+	friend std::ostream& operator<<(std::ostream& out, const SinglyLinkedList<T>& sll) {
 		LinkNode* it = sll.head;
 		for (Iterator it = sll.begin(); it != sll.end(); it++)
 			out << *it << " ";

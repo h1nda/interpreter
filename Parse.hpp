@@ -2,16 +2,15 @@
 #include <string>
 #include <vector>
 #include <iostream>
-//#include <stack>
+#include <stack>
 using namespace std;
-
 // Distinguish
-//extern const int VAR_TERMINALS = 31;
+const int VAR_TERMINALS = 31;
 size_t hashFunction(string s) { //Polynomial rolling hash
 	int id = 0;
 	int n = s.length();
 	for (int i = 0; i < n; i++) {
-		id += s[i] * pow(31, i);
+		id += s[i] * pow(VAR_TERMINALS, i);
 	}
 	return id;
 }
