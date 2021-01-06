@@ -103,7 +103,7 @@ T& SinglyLinkedList<T>::Iterator::operator*() const {
 }
 template <class T>
 bool SinglyLinkedList<T>::isEmpty() {
-	return head == nullptr;
+	return head == nullptr &&  tail == nullptr;
 }
 template <class T>
 void SinglyLinkedList<T>::pushBack(T data) {
@@ -158,7 +158,8 @@ typename SinglyLinkedList<T>::Iterator SinglyLinkedList<T>::end() const {
 }
 template <class T>
 SinglyLinkedList<T>::SinglyLinkedList() {
-	head = tail = nullptr;
+	head = nullptr;
+	tail = nullptr;
 }
 template <class T>
 SinglyLinkedList<T>::~SinglyLinkedList() {

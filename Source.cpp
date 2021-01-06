@@ -107,7 +107,7 @@ int main() {
 	//std::cout << test1.Evaluate(init.Get(testt));
 	//std::cout << "oop";
 	Lexer test("6 / 2 + 6 % 4");
-	
+	Parser tester(test.tokens);
 
 	//TEST
 	/*SinglyLinkedList<int> a;
