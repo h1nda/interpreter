@@ -1,31 +1,33 @@
 #pragma once //DELETE L8R
-/*To help with breaking up an equation, we create a Token class 
+/*To help with breaking up an equation, we create a Token class
 that will store data (*,/,+ or integers) and their type
 Type: NUMBER, VARIABLE, FUNCTION DEFINITION, FUNCTION, =, OPERATOR, and other*/
 #include <string>
 const int VAR_TERMINALS = 31;
 enum class TokenTypes {
-		END,
-		BLOCK,
-		PRINT,
-		READ,
-		NUMBER,
-		VAR,
-		MULT,
-		SUB, 
-		MOD,
-		DIV,
-		ADD,
-		NEWLINE,
-		ASSIGN,
-		LEFT_BRACKET,
-		RIGHT_BRACKET,
-		FUNCTION,
-		PARAMATER
-	};
-class Token { 
+	END,
+	BLOCK,
+	PRINT,
+	READ,
+	NUMBER,
+	VAR,
+	MULT,
+	SUB,
+	MOD,
+	DIV,
+	ADD,
+	NEWLINE,
+	ASSIGN,
+	LEFT_BRACKET,
+	LEFT_SQ_BR,
+	RIGHT_SQ_BR,
+	RIGHT_BRACKET,
+	FUNCTION,
+	PARAMATER
+};
+class Token {
 public:
-//using TokenTypes;
+	//using TokenTypes;
 	TokenTypes type = TokenTypes::END;
 	int value = -1; // for numbers
 	//char op = ' '; // for operators
@@ -40,7 +42,7 @@ public:
 	void printHash() {
 		std::cout << hash;
 	}
-	Token(TokenTypes type, int line =0) {
+	Token(TokenTypes type, int line = 0) {
 		if (type == TokenTypes::ADD || type == TokenTypes::SUB)
 			precedence = false;
 		this->type = type;
@@ -118,7 +120,7 @@ public:
 			std::cout << op;
 	}*/
 
-	
+
 };
 
 // VARIABLES will be a special type of token that have a char and a value. 

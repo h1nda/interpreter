@@ -120,12 +120,18 @@ public:
 			next();
 			return left;
 		}
-		case TokenTypes::NEWLINE:
+		case TokenTypes::NEWLINE: {
 			next();
 			break;
+		}
+		case TokenTypes::FUNCTION:
+		{
+
+		}
 		default:
-			std::cerr << "EXPECTED STATEMENT: invalid statement at line #" << (*currentTokenIndex).line << std::endl;
-			exit(1);
+		{std::cerr << "EXPECTED STATEMENT: invalid statement at line #" << (*currentTokenIndex).line << std::endl;
+		exit(1);
+		}
 		}
 		}			
 

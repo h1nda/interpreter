@@ -2,13 +2,13 @@
 #include <vector>
 const int PRIME_NUMBER_SIZE = 53;
 /*To store the variables, we will build a dynamic array of expressions, where each index will correspond to a variable name (string). We use mapFunction() to encode a string into an index. This way, whenever we are calling an already declared variable/function, we can find/modify it in O(1). */
-
+template <class T>
 class SymbolTable {
 
 
 	struct Pair {
 		Token key;
-		int evalExpr;
+		T evalExpr;
 		Pair(Token key, int expr) : key(key), evalExpr(expr) {};
 	};
 	SinglyLinkedList<Pair> entries[PRIME_NUMBER_SIZE]; 
@@ -44,7 +44,7 @@ public:
 		}
 		return *this;
 	}*/
-	void Insert(Token key, int value) {
+	void Insert(Token key, T value) {
 		int index = key.hash % PRIME_NUMBER_SIZE;
 		// SinglyLinkedList<Pair> LookInto = &entries[index];
 		if (entries[index].isEmpty()) {
@@ -52,7 +52,7 @@ public:
 			
 		}
 		else {
-			for (SinglyLinkedList<Pair>::Iterator it = entries[index].begin(); it != entries[index].end(); it++) {
+			for (auto it = entries[index].begin(); it != entries[index].end(); it++) {
 				if ((*it).key.name == key.name) {
 					if ((*it).evalExpr == value)
 						throw "Variable already exists";
@@ -64,7 +64,7 @@ public:
 			}
 		}
 	}
-	int Get(Token key) {
+	T Get(Token key) {
 		int index = key.hash % PRIME_NUMBER_SIZE;
 		//SinglyLinkedList<Pair> LookInto = entries[index];
 		for (auto it = entries[index].begin(); it != entries[index].end(); it++) {
