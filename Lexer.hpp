@@ -1,4 +1,5 @@
 /*This parses a split string into a number*/
+#include <cstdlib>
 #include "SinglyLinkedList.hpp"
 #include "Token.hpp"
 class Lexer {
@@ -80,8 +81,11 @@ public: //REMOVE L8R
 					std::string name = buildFunctionName();
 					buildToken(TokenTypes::FUNCTION, name);
 				}
-				else
-					throw "error";
+				else {
+					std::cout << "UNDEFINED TOKEN ERROR: unknown symbol '" << sourceCode[current] << "' on line #" << line << std::endl;
+					std::cout << "exit"; 
+					std::exit(1);
+				}
 
 			}
 		}
@@ -132,7 +136,9 @@ public: //REMOVE L8R
 public:
 	Lexer(std::string src) {
 		sourceCode = src;
+
 		generateTokenList();
+
 	}
 };
 

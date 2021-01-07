@@ -18,7 +18,17 @@ class Parser {
 	SinglyLinkedList<Token>::Iterator currentTokenIndex;
 	//Node* root;
 public:
-	Parser() {}
+	Parser() {};
+	void expect(TokenTypes type, char tokench) {
+		if ((*currentTokenIndex).type != type)
+		{
+			error(tokench);
+		}
+	}
+	void error(char tokench) {
+		std::cerr << "UNEXPECTED TOKEN ERROR: expected '" << tokench << "' on line #" << (*currentTokenIndex).line << std::endl;
+		exit(1);
+	}
 	Parser(const SinglyLinkedList<Token>& tokens) {
 		this->tokens = tokens;
 		currentTokenIndex = tokens.begin();
@@ -67,8 +77,7 @@ public:
 			next();
 			Node* leaf = parseExpression();
 			next();
-			if ((*currentTokenIndex).type != TokenTypes::RIGHT_BRACKET)
-				throw "error";
+			expect(TokenTypes::RIGHT_BRACKET, ')');
 			//nextToken();
 			return leaf;
 		}
@@ -96,16 +105,17 @@ public:
 		case TokenTypes::VAR: {
 			Node* right = new Node(*currentTokenIndex);
 			next();
-			next(); //TO DO: MAKE SURE IT MATCHES ASSIGNMENT OPERATOR
+			expect(TokenTypes::ASSIGN, '=');
+			next();//TO DO: MAKE SURE IT MATCHES ASSIGNMENT OPERATOR
 			left = new Node(TokenTypes::ASSIGN, right, parseExpression());
-			next();
+			//next();
 			return left;
 		}
 		case TokenTypes::NEWLINE:
 			next();
 			break;
 		default:
-			throw "expecting statement!";
+			std::cerr << "EXPECTED STATEMENT: invalid statement at line #" << (*currentTokenIndex).line << std::endl;
 		}
 		}			
 

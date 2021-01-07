@@ -25,6 +25,7 @@ enum class TokenTypes {
 	};
 class Token { 
 public:
+//using TokenTypes;
 	TokenTypes type = TokenTypes::END;
 	int value = -1; // for numbers
 	//char op = ' '; // for operators

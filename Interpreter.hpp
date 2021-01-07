@@ -4,14 +4,17 @@
 class Interpreter {
 public:
 	SymbolTable vars;
-	SymbolTable funcs;
+	//SymbolTable funcs;
 public:
+
 	int Evaluate(Node* root) {
 		if (root == nullptr)
 			return 0;
 		switch (root->data.type) {
 		case TokenTypes::VAR:
 			return vars.Get(root->data);
+		case TokenTypes::READ:
+			return 0;
 		case TokenTypes::ASSIGN:
 			vars.Insert(root->left->data, Evaluate(root->right));
 		case TokenTypes::NUMBER:

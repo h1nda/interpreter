@@ -2,6 +2,7 @@
 #include <vector>
 const int PRIME_NUMBER_SIZE = 53;
 /*To store the variables, we will build a dynamic array of expressions, where each index will correspond to a variable name (string). We use mapFunction() to encode a string into an index. This way, whenever we are calling an already declared variable/function, we can find/modify it in O(1). */
+
 class SymbolTable {
 
 
@@ -70,6 +71,7 @@ public:
 			if ((*it).key.name == key.name)
 				return (*it).evalExpr;
 		}
-		throw "invoking nonexistent variable!";
+		std::cerr << "ERROR: invoking undeclared variable or function on line #" << key.line;
+		exit(1);
 	}
 };

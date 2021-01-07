@@ -72,6 +72,7 @@
 //		}
 //	}
 //};
+
 int main() {
 	//string assign = " a = (43 + 3) / 2";
 	//Parser test1(assign);
@@ -107,16 +108,16 @@ int main() {
 	//init.Insert(testt, node);
 	//std::cout << test1.Evaluate(init.Get(testt));
 	//std::cout << "oop";
-	/*Lexer tester("print 5+3\na = 504\nb=40+a");
-	Parser parser(tester.tokens);
-	Node* result = parser.parseAll();*/
-	SymbolTable sb;
-	Lexer expr("a = 4+394-1\nb = a + 6\nprint b");
-	Parser par(expr.tokens);
-	Node* result = par.parseAll();
+//	Lexer tester("print 5+3\na = 504\nb=40+a");
+////	Parser parser(tester.tokens);
+	/*Node* result = parser.parseAll();*/
+	/*SymbolTable sb;*/
+	Lexer expr1("b = (4 +4 ) *10\nprint b");
+	Parser par(expr1.tokens);
+	Node* root = par.parseAll();
 	Interpreter interp;
-	interp.Evaluate(result);
-	sb = interp.vars;
+	interp.Evaluate(root);
+	
 	return 0;
 	//TEST
 	/*SinglyLinkedList<int> a;
