@@ -106,9 +106,10 @@ int main() {
 	//init.Insert(testt, node);
 	//std::cout << test1.Evaluate(init.Get(testt));
 	//std::cout << "oop";
-	Lexer test("6 / 2 + 6 % 4");
-	Parser tester(test.tokens);
-
+	Lexer tester("print 5+3\na = 504\nb=40+a");
+	Parser parser(tester.tokens);
+	Node* result = parser.parseAll();
+	return 0;
 	//TEST
 	/*SinglyLinkedList<int> a;
 	a.pushBack(4);

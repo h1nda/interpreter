@@ -6,6 +6,7 @@ Type: NUMBER, VARIABLE, FUNCTION DEFINITION, FUNCTION, =, OPERATOR, and other*/
 const int VAR_TERMINALS = 31;
 enum class TokenTypes {
 		Null,
+		BLOCK,
 		Print,
 		Read,
 		Number,
@@ -15,6 +16,7 @@ enum class TokenTypes {
 		MOD,
 		DIV,
 		ADD,
+		NEWLINE,
 		Assignment,
 		LeftBracket,
 		RightBracket,
@@ -38,7 +40,7 @@ public:
 	void printHash() {
 		std::cout << hash;
 	}
-	Token(TokenTypes type, int line) {
+	Token(TokenTypes type, int line =0) {
 		if (type == TokenTypes::ADD || type == TokenTypes::SUB)
 			precedence = false;
 		this->type = type;

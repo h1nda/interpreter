@@ -25,6 +25,7 @@ public: //REMOVE L8R
 				current++;
 				break;
 			case '\n':
+				buildToken(TokenTypes::NEWLINE);
 				line++;
 				current++;
 				break;
@@ -84,6 +85,8 @@ public: //REMOVE L8R
 
 			}
 		}
+		buildToken(TokenTypes::Null);
+		//return tokens;
 	}
 	bool isDigit() {
 		return (sourceCode[current] >= '0' && sourceCode[current] <= '9');
