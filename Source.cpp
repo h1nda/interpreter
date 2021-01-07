@@ -1,5 +1,6 @@
 //!!!MEMORY LEAK
-#include "AST.hpp"
+#include "Interpreter.hpp"
+//#include <vld.h>
 //class SymbolTable {
 //	size_t capacity = 31;
 //	//size_t current;
@@ -106,9 +107,16 @@ int main() {
 	//init.Insert(testt, node);
 	//std::cout << test1.Evaluate(init.Get(testt));
 	//std::cout << "oop";
-	Lexer tester("print 5+3\na = 504\nb=40+a");
+	/*Lexer tester("print 5+3\na = 504\nb=40+a");
 	Parser parser(tester.tokens);
-	Node* result = parser.parseAll();
+	Node* result = parser.parseAll();*/
+	SymbolTable sb;
+	Lexer expr("a = 4+394-1\nb = a + 6\nprint b");
+	Parser par(expr.tokens);
+	Node* result = par.parseAll();
+	Interpreter interp;
+	interp.Evaluate(result);
+	sb = interp.vars;
 	return 0;
 	//TEST
 	/*SinglyLinkedList<int> a;

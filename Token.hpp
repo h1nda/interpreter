@@ -5,28 +5,27 @@ Type: NUMBER, VARIABLE, FUNCTION DEFINITION, FUNCTION, =, OPERATOR, and other*/
 #include <string>
 const int VAR_TERMINALS = 31;
 enum class TokenTypes {
-		Null,
+		END,
 		BLOCK,
-		Print,
-		Read,
-		Number,
-		Variable,
+		PRINT,
+		READ,
+		NUMBER,
+		VAR,
 		MULT,
 		SUB, 
 		MOD,
 		DIV,
 		ADD,
 		NEWLINE,
-		Assignment,
-		LeftBracket,
-		RightBracket,
-		FunctionCall,
-		FunctionDef,
-		Parameter
+		ASSIGN,
+		LEFT_BRACKET,
+		RIGHT_BRACKET,
+		FUNCTION,
+		PARAMATER
 	};
 class Token { 
 public:
-	TokenTypes type = TokenTypes::Null;
+	TokenTypes type = TokenTypes::END;
 	int value = -1; // for numbers
 	//char op = ' '; // for operators
 	std::string name; // for variable and function names
@@ -47,9 +46,9 @@ public:
 		this->line = line;
 	}
 	Token(TokenTypes type, int value, int line) : type(type), value(value), line(line) {};
-	Token(TokenTypes type, std::string name, int line) {
+	Token(TokenTypes type, std::string name, int line = 0) {
 		this->name = name;
-		if (type == TokenTypes::FunctionDef || type == TokenTypes::Variable) {
+		if (type == TokenTypes::FUNCTION || type == TokenTypes::VAR) {
 			this->hash = hashFunction();
 		}
 		this->type = type;

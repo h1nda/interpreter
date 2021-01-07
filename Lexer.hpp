@@ -30,11 +30,11 @@ public: //REMOVE L8R
 				current++;
 				break;
 			case '(':
-				buildToken(TokenTypes::LeftBracket);
+				buildToken(TokenTypes::LEFT_BRACKET);
 				current++;
 				break;
 			case ')':
-				buildToken(TokenTypes::RightBracket);
+				buildToken(TokenTypes::RIGHT_BRACKET);
 				current++;
 				break;
 			case '*':
@@ -58,34 +58,34 @@ public: //REMOVE L8R
 				current++;
 				break;
 			case '=':
-				buildToken(TokenTypes::Assignment);
+				buildToken(TokenTypes::ASSIGN);
 				current++;
 				break;
 			default:
 				if (isDigit()) {
 					int value = parseStringToInt();
-					buildToken(TokenTypes::Number, value);
+					buildToken(TokenTypes::NUMBER, value);
 				}
 				else if (isLowerCase()) {
 					std::string name = buildVariableName();
 					if (name == "print")
-						buildToken(TokenTypes::Print);
+						buildToken(TokenTypes::PRINT);
 					else if (name == "read")
-						buildToken(TokenTypes::Read);
+						buildToken(TokenTypes::READ);
 					else {
-						buildToken(TokenTypes::Variable, name);
+						buildToken(TokenTypes::VAR, name);
 					}
 				}
 				else if (isUpperCase()) {
 					std::string name = buildFunctionName();
-					buildToken(TokenTypes::FunctionDef, name);
+					buildToken(TokenTypes::FUNCTION, name);
 				}
 				else
 					throw "error";
 
 			}
 		}
-		buildToken(TokenTypes::Null);
+		buildToken(TokenTypes::END);
 		//return tokens;
 	}
 	bool isDigit() {

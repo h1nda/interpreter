@@ -163,7 +163,7 @@ SinglyLinkedList<T>::SinglyLinkedList() {
 }
 template <class T>
 SinglyLinkedList<T>::~SinglyLinkedList() {
-	std::cout << "calling destructor";
+	//std::cout << "calling destructor";
 	free();
 }
 template <class T>

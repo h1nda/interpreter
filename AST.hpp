@@ -2,11 +2,15 @@
 //#include <iostream>
 
 //todo seperate node types
-class Node {
+struct Node {
 	Token data;
 	Node* left = nullptr;
 	Node* right = nullptr;
 	Node(Token data, Node* left = nullptr, Node* right = nullptr) : data(data), left(left), right(right) {};
+	Node() : data(Token(TokenTypes::END)) {
+		left = nullptr;
+		right = nullptr;
+	}
 };
 
 class Parser {
@@ -24,8 +28,8 @@ public:
 	}
 	Token peek() {
 		Token next = *currentTokenIndex.peek();
-		if (next.type == TokenTypes::Null)
-			return Token();
+		/*if (next.type == TokenTypes::END)
+			return Token();*/
 		return *(currentTokenIndex.peek());
 	}
 	bool isNextBinaryOp() {
@@ -56,14 +60,14 @@ public:
 	//We represent a terminal from the rule FACTOR -> VAR | Num | (Expr) as a leaf in the AST:
 	Node* Terminal() {
 		switch ((*currentTokenIndex).type) {
-		case TokenTypes::Number:
-		case TokenTypes::Variable:
+		case TokenTypes::NUMBER:
+		case TokenTypes::VAR:
 			return new Node(*currentTokenIndex);
-		case TokenTypes::LeftBracket: {
+		case TokenTypes::LEFT_BRACKET: {
 			next();
 			Node* leaf = parseExpression();
 			next();
-			if ((*currentTokenIndex).type != TokenTypes::RightBracket)
+			if ((*currentTokenIndex).type != TokenTypes::RIGHT_BRACKET)
 				throw "error";
 			//nextToken();
 			return leaf;
@@ -82,38 +86,38 @@ public:
 	Node* parseStatement() {
 		Node* left = nullptr; //will be the returned node in the end, FLOW
 		switch ((*currentTokenIndex).type) {
-		case TokenTypes::Print: { //print node: one child, -> expr?
+		case TokenTypes::PRINT: { //print node: one child, -> expr?
 			Token print = *currentTokenIndex; // print
 			next();
 			left = new Node(print, parseExpression());
 			next();// Flow, left: Flow/null, right: PrntStnt
 			return left;
 		}
-		case TokenTypes::Variable: {
+		case TokenTypes::VAR: {
 			Node* right = new Node(*currentTokenIndex);
 			next();
 			next(); //TO DO: MAKE SURE IT MATCHES ASSIGNMENT OPERATOR
-			left = new Node(TokenTypes::Assignment, right, parseExpression());
+			left = new Node(TokenTypes::ASSIGN, right, parseExpression());
 			next();
 			return left;
 		}
 		case TokenTypes::NEWLINE:
 			next();
 			break;
+		default:
+			throw "expecting statement!";
 		}
-		//next();
-
 		}			
 
 	Node* parseAll() {
-		Node* flow = nullptr;
-		while ((*currentTokenIndex).type != TokenTypes::Null) {
+		Node* block = nullptr;
+		while ((*currentTokenIndex).type != TokenTypes::END) {
 			if ((*currentTokenIndex).type == TokenTypes::NEWLINE)
 				next();
 			else
-			flow = new Node(TokenTypes::BLOCK, flow, parseStatement());
+			block = new Node(TokenTypes::BLOCK, block, parseStatement());
 			//next();
 		}
-		return flow;
+		return block;
 	}
 };
