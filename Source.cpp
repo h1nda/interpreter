@@ -112,7 +112,7 @@ int main() {
 ////	Parser parser(tester.tokens);
 	/*Node* result = parser.parseAll();*/
 	/*SymbolTable sb;*/
-	Lexer expr1("b = (4 +4 ) *10\nprint b");
+	Lexer expr1("b = 4 +4 *10\nread 55");
 	Parser par(expr1.tokens);
 	Node* root = par.parseAll();
 	Interpreter interp;

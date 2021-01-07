@@ -19,14 +19,14 @@ class Parser {
 	//Node* root;
 public:
 	Parser() {};
-	void expect(TokenTypes type, char tokench) {
+	void expect(TokenTypes type, const char* tokench) {
 		if ((*currentTokenIndex).type != type)
 		{
 			error(tokench);
 		}
 	}
-	void error(char tokench) {
-		std::cerr << "UNEXPECTED TOKEN ERROR: expected '" << tokench << "' on line #" << (*currentTokenIndex).line << std::endl;
+	void error(const char* tokench) {
+		std::cerr << "UNEXPECTED TOKEN ERROR: expected " << tokench << " on line #" << (*currentTokenIndex).line << std::endl;
 		exit(1);
 	}
 	Parser(const SinglyLinkedList<Token>& tokens) {
@@ -40,7 +40,7 @@ public:
 		Token next = *currentTokenIndex.peek();
 		/*if (next.type == TokenTypes::END)
 			return Token();*/
-		return *(currentTokenIndex.peek());
+		return next;
 	}
 	bool isNextBinaryOp() {
 		return peek().type == TokenTypes::ADD || peek().type == TokenTypes::SUB ||
@@ -77,7 +77,7 @@ public:
 			next();
 			Node* leaf = parseExpression();
 			next();
-			expect(TokenTypes::RIGHT_BRACKET, ')');
+			expect(TokenTypes::RIGHT_BRACKET, "')'");
 			//nextToken();
 			return leaf;
 		}
@@ -102,13 +102,22 @@ public:
 			next();// Flow, left: Flow/null, right: PrntStnt
 			return left;
 		}
+		case TokenTypes::READ: {
+			Token read = *currentTokenIndex;
+			next();
+			expect(TokenTypes::VAR, "{a-z}*");
+			left = new Node(read, Terminal());
+			next();
+			return left;
+		}
 		case TokenTypes::VAR: {
 			Node* right = new Node(*currentTokenIndex);
 			next();
-			expect(TokenTypes::ASSIGN, '=');
+			expect(TokenTypes::ASSIGN, "'='");
+			Token assign = *currentTokenIndex;
 			next();//TO DO: MAKE SURE IT MATCHES ASSIGNMENT OPERATOR
-			left = new Node(TokenTypes::ASSIGN, right, parseExpression());
-			//next();
+			left = new Node(assign, right, parseExpression());
+			next();
 			return left;
 		}
 		case TokenTypes::NEWLINE:
@@ -116,6 +125,7 @@ public:
 			break;
 		default:
 			std::cerr << "EXPECTED STATEMENT: invalid statement at line #" << (*currentTokenIndex).line << std::endl;
+			exit(1);
 		}
 		}			
 
