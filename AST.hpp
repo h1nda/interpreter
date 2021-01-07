@@ -1,6 +1,8 @@
 #include "Lexer.hpp"
 //#include <iostream>
-struct Node {
+
+//todo seperate node types
+class Node {
 	Token data;
 	Node* left = nullptr;
 	Node* right = nullptr;
@@ -69,19 +71,6 @@ public:
 		}
 		//return new Node(currentToken);
 	}
-	/*We will keep assigned variables */
-	Node* Assign() { // a = 5+3 /2 -> a = 4;
-		/*
-		a = 1
-		b = 3
-		a = b + 2*/
-		Node* left = new Node(*currentTokenIndex);
-		next();
-		Token key = *currentTokenIndex;
-		next();
-		Node* right = parseExpression();
-		return new Node(key, left, right);
-	}
 	/*For making Statements into trees we will use Recursive Descent algorithm
 	reason for this is so the Interpreter can traverse it from top to bottom but execute them from bottoum up and this will keep the integrity of the source codes' flow
 	Recursive Descent approach:
@@ -93,7 +82,7 @@ public:
 	Node* parseStatement() {
 		Node* left = nullptr; //will be the returned node in the end, FLOW
 		switch ((*currentTokenIndex).type) {
-		case TokenTypes::Print: { //print node: one child, -> expr
+		case TokenTypes::Print: { //print node: one child, -> expr?
 			Token print = *currentTokenIndex; // print
 			next();
 			left = new Node(print, parseExpression());

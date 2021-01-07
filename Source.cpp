@@ -1,4 +1,4 @@
-
+//!!!MEMORY LEAK
 #include "AST.hpp"
 //class SymbolTable {
 //	size_t capacity = 31;

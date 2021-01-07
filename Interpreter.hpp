@@ -1,6 +1,9 @@
 #pragma once //DEL
-#include "AST.hpp" 
+#include "AST.hpp" //takes the ast then traverses/interprets/evaluates it
+
 class Interpreter {
+
+public:
 	int Evaluate(Node* root) {
 		switch (root->data.type)
 		{
