@@ -9,7 +9,7 @@ class SymbolTable {
 	struct Pair {
 		Token key;
 		T evalExpr;
-		Pair(Token key, int expr) : key(key), evalExpr(expr) {};
+		Pair(Token key, T expr) : key(key), evalExpr(expr) {};
 	};
 	SinglyLinkedList<Pair> entries[PRIME_NUMBER_SIZE]; 
 	/*void free() {

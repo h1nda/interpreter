@@ -67,9 +67,10 @@ public:
 		}
 		return left;
 	}
-	//We represent a terminal from the rule FACTOR -> VAR | Num | (Expr) as a leaf in the AST:
+	//We represent a terminal from the rule FACTOR -> VAR | Num | (Expr) |FUNC[EXPR] as a leaf in the AST:
 	Node* Terminal() {
 		switch ((*currentTokenIndex).type) {
+		case TokenTypes::PARAMATER:
 		case TokenTypes::NUMBER:
 		case TokenTypes::VAR:
 			return new Node(*currentTokenIndex);
@@ -81,6 +82,16 @@ public:
 			//nextToken();
 			return leaf;
 		}
+		case TokenTypes::FUNCTION:
+			Node* funcName = new Node(*currentTokenIndex);
+			next();
+			expect(TokenTypes::LEFT_SQ_BR, "'[");
+			next();
+			Node* expr = parseExpression();
+			next();
+			expect(TokenTypes::RIGHT_SQ_BR, "']'");
+			return new Node(TokenTypes::FUNCCALL, funcName, expr);
+
 		}
 		//return new Node(currentToken);
 	}
@@ -92,6 +103,7 @@ public:
 	it's left-hand side is either nullptr or another Flow node
 	it's right-hand side can only be a Statement Node
 	*/
+
 	Node* parseStatement() {
 		Node* left = nullptr; //will be the returned node in the end, FLOW
 		switch ((*currentTokenIndex).type) {
@@ -130,7 +142,7 @@ public:
 			next();
 			expect(TokenTypes::LEFT_SQ_BR, "'['");
 			next();
-			expect(TokenTypes::VAR, "a variable");
+			expect(TokenTypes::PARAMATER, "a parameter");
 			Node* arg = new Node(*currentTokenIndex);
 			next();
 			expect(TokenTypes::RIGHT_SQ_BR, "']'");

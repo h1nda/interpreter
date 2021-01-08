@@ -25,6 +25,10 @@ public: //REMOVE L8R
 			case '\t':
 				current++;
 				break;
+			case 'x':
+				buildToken(TokenTypes::PARAMATER);
+				current++;
+				break;
 			case '\n':
 				buildToken(TokenTypes::NEWLINE);
 				line++;

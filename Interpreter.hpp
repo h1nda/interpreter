@@ -5,7 +5,9 @@ class Interpreter {
 public:
 	SymbolTable<int> vars;
 	SymbolTable<Node*> funcs;
-	//SymbolTable funcs;
+	//SymbolTable funcs
+	//std::vector<int> vars;
+	int x;
 public:
 	int validInput() {
 		int input;
@@ -22,6 +24,8 @@ public:
 		if (root == nullptr)
 			return 0;
 		switch (root->data.type) {
+		case TokenTypes::PARAMATER:
+			return x;
 		case TokenTypes::VAR:
 			return vars.Get(root->data);
 		case TokenTypes::READ: { //To read: get left node token then cin expresion to add to symbol table
@@ -30,10 +34,15 @@ public:
 			vars.Insert(root->left->data, input);
 			break;
 		}
+		case TokenTypes::FUNCCALL:
+			x = Evaluate(root->right);
+			return Evaluate(funcs.Get(root->left->data));
 		case TokenTypes::ASSIGN:
 			if (root->left->data.type == TokenTypes::FUNCDECL) {
 				funcs.Insert(root->left->left->data, root->right);
+				x = INT_MAX;
 			}
+			else
 			vars.Insert(root->left->data, Evaluate(root->right));
 			break;
 		case TokenTypes::NUMBER:

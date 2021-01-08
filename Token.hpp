@@ -18,6 +18,7 @@ enum class TokenTypes {
 	ADD,
 	NEWLINE,
 	FUNCDECL,
+	FUNCCALL,
 	ASSIGN,
 	LEFT_BRACKET,
 	LEFT_SQ_BR,
