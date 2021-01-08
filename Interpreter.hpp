@@ -31,6 +31,9 @@ public:
 			break;
 		}
 		case TokenTypes::ASSIGN:
+			if (root->left->data.type == TokenTypes::FUNCDECL) {
+				funcs.Insert(root->left->left->data, root->right);
+			}
 			vars.Insert(root->left->data, Evaluate(root->right));
 			break;
 		case TokenTypes::NUMBER:

@@ -3,7 +3,7 @@
 
 int main() {
 	
-	Lexer expr1("b = 4 +4 *10\nprint b\nread q\nprint q+b");
+	Lexer expr1("F[x] = x*3-6");
 	Parser par(expr1.tokens);
 	Node* root = par.parseAll();
 	Interpreter interp;

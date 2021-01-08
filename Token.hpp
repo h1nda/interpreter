@@ -17,6 +17,7 @@ enum class TokenTypes {
 	DIV,
 	ADD,
 	NEWLINE,
+	FUNCDECL,
 	ASSIGN,
 	LEFT_BRACKET,
 	LEFT_SQ_BR,

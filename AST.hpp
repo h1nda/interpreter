@@ -84,8 +84,8 @@ public:
 		}
 		//return new Node(currentToken);
 	}
-	/*For making Statements into trees we will use Recursive Descent algorithm
-	reason for this is so the Interpreter can traverse it from top to bottom but execute them from bottoum up and this will keep the integrity of the source codes' flow
+	/*For making Statements into trees we will use Recursive Descent Parsing
+	reason for this is so the Interpreter can traverse it from top to bottom but execute them from bottom up and this will keep the integrity of the source codes' flow
 	Recursive Descent approach:
 	We will have an empty Token with type Flow, which will be the root of the tree.
 	It obeys the following rules: it's the root of the tree.
@@ -126,14 +126,29 @@ public:
 		}
 		case TokenTypes::FUNCTION:
 		{
-
+			Node* funcName = new Node(*currentTokenIndex);
+			next();
+			expect(TokenTypes::LEFT_SQ_BR, "'['");
+			next();
+			expect(TokenTypes::VAR, "a variable");
+			Node* arg = new Node(*currentTokenIndex);
+			next();
+			expect(TokenTypes::RIGHT_SQ_BR, "']'");
+			next();
+			Node* prototype = new Node(TokenTypes::FUNCDECL, funcName, arg);
+			expect(TokenTypes::ASSIGN, "'='");
+			next();
+			Node* body = parseExpression();
+			Node* left = new Node(TokenTypes::ASSIGN, prototype, body);
+			next();
+			return left;
 		}
 		default:
 		{std::cerr << "EXPECTED STATEMENT: invalid statement at line #" << (*currentTokenIndex).line << std::endl;
 		exit(1);
 		}
 		}
-		}			
+	}
 
 	Node* parseAll() {
 		Node* block = nullptr;

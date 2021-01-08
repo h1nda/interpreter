@@ -38,6 +38,15 @@ public: //REMOVE L8R
 				buildToken(TokenTypes::RIGHT_BRACKET);
 				current++;
 				break;
+			case ']':
+				buildToken(TokenTypes::RIGHT_SQ_BR);
+				current++;
+				break;
+			case '[':
+				buildToken(TokenTypes::LEFT_SQ_BR);
+				current++;
+				break;
+
 			case '*':
 				buildToken(TokenTypes::MULT);
 				current++;
@@ -82,7 +91,7 @@ public: //REMOVE L8R
 					buildToken(TokenTypes::FUNCTION, name);
 				}
 				else {
-					std::cout << "UNDEFINED TOKEN ERROR: unknown symbol '" << sourceCode[current] << "' on line #" << line << std::endl;
+					std::cout << "LEXER ERROR: unknown token '" << sourceCode[current] << "' on line #" << line << std::endl;
 					std::cout << "exit"; 
 					std::exit(1);
 				}
