@@ -38,5 +38,13 @@
     <ClInclude Include="Interpreter.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="EXPR.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="tester.txt">
+      <Filter>Source Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

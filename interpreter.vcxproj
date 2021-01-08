@@ -145,9 +145,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AST.hpp" />
+    <ClInclude Include="EXPR.hpp" />
     <ClInclude Include="Interpreter.hpp" />
     <ClInclude Include="Lexer.hpp" />
     <ClInclude Include="Token.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="tester.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

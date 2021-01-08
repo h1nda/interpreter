@@ -9,6 +9,13 @@ public:
 	//std::vector<int> vars;
 	int x;
 public:
+	Interpreter(Node* root) {
+		Evaluate(root);
+	}
+	int DividingByZeroWarning(Token info) {
+		std::cerr << "WARNING: diving by zero on line #" << info.line << ". initialising to 0!" << std::endl;
+		return 0;
+	}
 	int validInput() {
 		int input;
 		std::cin >> input;
@@ -52,7 +59,7 @@ public:
 		case TokenTypes::MULT:
 			return Evaluate(root->left) * Evaluate(root->right);
 		case TokenTypes::DIV:
-			return Evaluate(root->left) / Evaluate(root->right);
+			return Evaluate(root->right) == 0 ? DividingByZeroWarning(root->right->data) : Evaluate(root->left) / Evaluate(root->right);
 		case TokenTypes::MOD:
 			return Evaluate(root->left) % Evaluate(root->right);
 		case TokenTypes::ADD:
@@ -63,6 +70,9 @@ public:
 			Evaluate(root->left);
 			Evaluate(root->right);
 			break;
+		default:
+			std::cerr << "UNKNOWN ERROR ENCOUNTERED." << std::endl;
+			exit(1);
 		}
 	}
 };

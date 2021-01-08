@@ -1,0 +1,6 @@
+a = 3
+read b
+F[x] = x * x
+print a
+print b
+print F[a+b]

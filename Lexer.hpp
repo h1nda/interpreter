@@ -8,7 +8,6 @@ public: //REMOVE L8R
 	SinglyLinkedList<Token> tokens;
 	int current = 0;
 	int line = 1;
-
 	void buildToken(TokenTypes type) {
 		tokens.pushBack(Token(type, line));
 	} // FOR SYMBOLS
@@ -75,6 +74,10 @@ public: //REMOVE L8R
 				buildToken(TokenTypes::ASSIGN);
 				current++;
 				break;
+			case '\0':
+				buildToken(TokenTypes::END);
+				current++;
+				break;
 			default:
 				if (isDigit()) {
 					int value = parseStringToInt();
@@ -96,13 +99,12 @@ public: //REMOVE L8R
 				}
 				else {
 					std::cout << "LEXER ERROR: unknown token '" << sourceCode[current] << "' on line #" << line << std::endl;
-					std::cout << "exit"; 
+					std::cout << "exit";
 					std::exit(1);
 				}
 
 			}
 		}
-		buildToken(TokenTypes::END);
 		//return tokens;
 	}
 	bool isDigit() {
