@@ -144,14 +144,14 @@
     <ClCompile Include="SymbolTable.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AST.hpp" />
+    <ClInclude Include="Parser.hpp" />
     <ClInclude Include="EXPR.hpp" />
     <ClInclude Include="Interpreter.hpp" />
     <ClInclude Include="Lexer.hpp" />
     <ClInclude Include="Token.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="tester.txt" />
+    <Text Include="test1.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

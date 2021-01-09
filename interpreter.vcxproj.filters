@@ -32,18 +32,18 @@
     <ClInclude Include="Lexer.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="AST.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="Interpreter.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="EXPR.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="Parser.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="tester.txt">
+    <Text Include="test1.txt">
       <Filter>Source Files</Filter>
     </Text>
   </ItemGroup>
