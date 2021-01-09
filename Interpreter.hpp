@@ -5,8 +5,6 @@ class Interpreter {
 public:
 	SymbolTable<int> vars;
 	SymbolTable<Node*> funcs;
-	//SymbolTable funcs
-	//std::vector<int> vars;
 	int x;
 public:
 	Interpreter(Node* root) {

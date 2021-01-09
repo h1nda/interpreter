@@ -1,7 +1,5 @@
 #include "Lexer.hpp"
-//#include <iostream>
 
-//todo seperate node types
 struct Node {
 	Token data;
 	Node* left = nullptr;
@@ -16,9 +14,6 @@ struct Node {
 class Parser {
 	SinglyLinkedList<Token> tokens;
 	SinglyLinkedList<Token>::Iterator currentTokenIndex;
-	//Node* root;
-public:
-	Parser() {};
 	void expect(TokenTypes type, const char* tokench) {
 		if ((*currentTokenIndex).type != type)
 		{
@@ -28,10 +23,6 @@ public:
 	void error(const char* tokench) {
 		std::cerr << "UNEXPECTED TOKEN ERROR: expected " << tokench << " on line #" << (*currentTokenIndex).line << std::endl;
 		exit(1);
-	}
-	Parser(const SinglyLinkedList<Token>& tokens) {
-		this->tokens = tokens;
-		currentTokenIndex = tokens.begin();
 	}
 	void next() {
 		currentTokenIndex++;
@@ -103,7 +94,6 @@ public:
 	it's left-hand side is either nullptr or another Flow node
 	it's right-hand side can only be a Statement Node
 	*/
-
 	Node* parseStatement() {
 		Node* left = nullptr; //will be the returned node in the end, FLOW
 		switch ((*currentTokenIndex).type) {
@@ -161,14 +151,19 @@ public:
 		}
 		}
 	}
-
+public:
+	Parser() {};
+	Parser(const SinglyLinkedList<Token>& tokens) {
+		this->tokens = tokens;
+		currentTokenIndex = tokens.begin();
+	}
 	Node* parseAll() {
 		Node* block = nullptr;
 		while ((*currentTokenIndex).type != TokenTypes::END) {
 			if ((*currentTokenIndex).type == TokenTypes::NEWLINE)
 				next();
 			else
-			block = new Node(TokenTypes::BLOCK, block, parseStatement());
+				block = new Node(TokenTypes::BLOCK, block, parseStatement());
 			//next();
 		}
 		return block;

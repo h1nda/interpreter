@@ -3,9 +3,8 @@
 #include "SinglyLinkedList.hpp"
 #include "Token.hpp"
 class Lexer {
-public: //REMOVE L8R
+	friend class EXPR;
 	std::string sourceCode;
-	SinglyLinkedList<Token> tokens;
 	int current = 0;
 	int line = 1;
 	void buildToken(TokenTypes type) {
@@ -148,6 +147,8 @@ public: //REMOVE L8R
 		}
 		return result;
 	}
+protected:
+SinglyLinkedList<Token> tokens;
 public:
 	Lexer(std::string src) {
 		sourceCode = src;
@@ -155,5 +156,6 @@ public:
 		generateTokenList();
 
 	}
+	
 };
 

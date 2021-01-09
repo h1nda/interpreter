@@ -9,6 +9,15 @@ class EXPR {
 		fileStream.seekg(0, std::ios::beg);
 		return size;
 	}
+	friend class Lexer;
+	void freeAST(Node* root) {
+		if (root == nullptr)
+			return;
+		freeAST(root->left);
+		freeAST(root->right);
+
+		delete root;
+	}
 	void load(std::ifstream& ifs) {
 		size_t len = fileSize(ifs);
 		sourceCode.resize(len);
@@ -23,12 +32,10 @@ class EXPR {
 		Parser parser(tokens);
 		Node* AST = parser.parseAll();
 		Interpreter interpret(AST);
-		exit(0);
+		freeAST(AST);
+		//exit(0);
 	}
 public:
-	EXPR() {
-		
-	}
 	void start() {
 		std::ifstream loadedFile;
 		std::cout << "PLEASE ENTER THE SOURCE CODE'S FILE NAME:" << std::endl;
