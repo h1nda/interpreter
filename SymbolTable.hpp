@@ -1,7 +1,7 @@
-#include "AST.hpp"
+#include "Parser.hpp"
 #include <vector>
-const int PRIME_NUMBER_SIZE = 53;
-/*To store the variables, we will build a dynamic array of expressions, where each index will correspond to a variable name (string). We use mapFunction() to encode a string into an index. This way, whenever we are calling an already declared variable/function, we can find/modify it in O(1). */
+const int PRIME_NUMBER_SIZE = 53; //Since we will be % by this number, it is better for it to be a prime number.
+/*To store the variables, we will build an array of expressions, where each index will correspond to the Token's hash. Whenever we are calling or inserting a variable/function, we can find it in O(1). */
 template <class T>
 class SymbolTable {
 	struct Pair {

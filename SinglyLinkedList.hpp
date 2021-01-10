@@ -1,5 +1,5 @@
-#pragma once //DELETE L8R
 #include <iostream>
+//just a singly linked list with an iterator
 template <class T>
 class SinglyLinkedList {
 	struct LinkNode {

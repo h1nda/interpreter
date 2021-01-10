@@ -1,6 +1,6 @@
 #include "Interpreter.hpp"
 #include <fstream>
-class EXPR {
+class EXPR { 
 	std::string sourceCode;
 	SinglyLinkedList<Token> tokens;
 	size_t fileSize(std::ifstream& fileStream) {
@@ -8,8 +8,7 @@ class EXPR {
 		size_t size = fileStream.tellg();
 		fileStream.seekg(0, std::ios::beg);
 		return size;
-	}
-	friend class Lexer;
+	} //Calculates the size of the source file
 	void freeAST(Node* root) {
 		if (root == nullptr)
 			return;
@@ -18,7 +17,7 @@ class EXPR {
 
 		delete root;
 	}
-	void load(std::ifstream& ifs) {
+	void load(std::ifstream& ifs) { //Creates a string out of the input file and assigns it to member variable sourceCode
 		size_t len = fileSize(ifs);
 		sourceCode.resize(len);
 		ifs.read(&sourceCode[0], sourceCode.size());
@@ -26,14 +25,13 @@ class EXPR {
 		run();
 
 	}
-	void run() {
+	void run() { 
 		Lexer lexer(sourceCode);
 		tokens = lexer.tokens;
 		Parser parser(tokens);
 		Node* AST = parser.parseAll();
 		Interpreter interpret(AST);
 		freeAST(AST);
-		//exit(0);
 	}
 public:
 	void start() {
