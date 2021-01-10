@@ -38,7 +38,8 @@ class Parser {
 	//The grammar for EXPR can be divided into two parts: expressions and statements. parseExpression() deals with the expressions. Uses a recursive Operator Precedence Parsing algorithm. The tree for an expression is:
 	/*         binOp (+,-,*,%,/)
 	          /     \
-	     Terminal   Terminal*/
+	     Terminal   Terminal
+		 It would be unwise to use the same parsing method for both statements and expressions since expressions are left recursive*/
 	Node* parseExpression() {
 		return parseExpressionHelper(Terminal(), 0); //starts off with building a terminal because expr rules are in the from TERM + TERM | TERM - TERM, etc.
 	}
@@ -95,7 +96,7 @@ class Parser {
 	it's left-hand side is either nullptr or another Flow node
 	it's right-hand side can only be a Statement Node
 	*/
-	//The other part of EXPR's grammar are statements. They are represented by the LINE grammar rule. Statements in EXPR are print, read and function and variable Declarations.
+	//The other part of EXPR's grammar are statements. They are represented by the LINE grammar rule. Statements in EXPR are print, read and function and variable Declarations. For them, we are using recursive descent parsing. It closely mirrors the grammar itself.
 	Node* parseStatement() {
 		Node* left = nullptr;
 		switch ((*currentTokenIndex).type) {
